@@ -1,4 +1,4 @@
-PlayerVoter
+Player Leaderboard Example
 ===========
 
 
