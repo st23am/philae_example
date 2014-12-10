@@ -4,7 +4,7 @@ PlayerVoter
 
 Install the Philae hex package in your mix.exs
 
-```=elixir
+```elixir
 defmodule PlayerVoter.Mixfile do
   use Mix.Project
 
@@ -42,7 +42,7 @@ end
 
 Setup a GenServer or some module to recieve calls from Philae
 
-```=elixir
+```elixir
 require Logger
 defmodule PlayerSync do
   use GenServer
@@ -85,7 +85,7 @@ end
 ```
 
 Start the leaderboard app
-```=meteor
+```meteor
  ~/src/elixir/philae_example (master*) $ cd leaderboard/
  ~/src/elixir/philae_example/leaderboard (master*) $ meteor
 [[[[[ ~/src/elixir/philae_example/leaderboard ]]]]]
@@ -108,7 +108,7 @@ Start the leaderboard app
 ```
 
 Start our PlayerCollectionSupervisor in IEx
-```=elixir
+```elixir
 ¶ ~/src/elixir/player_voter $ iex -S mix
 Erlang/OTP 17 [erts-6.2] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 
