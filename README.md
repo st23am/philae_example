@@ -82,9 +82,32 @@ defmodule PlayerSync do
     {:reply, :ok, state}
   end
 end
+```
+
+Start the leaderboard app
+```=meteor
+ ~/src/elixir/philae_example (master*) $ cd leaderboard/
+ ~/src/elixir/philae_example/leaderboard (master*) $ meteor
+[[[[[ ~/src/elixir/philae_example/leaderboard ]]]]]
+
+=> Started proxy.
+
+=> Meteor 1.0.1: Fixes a security issue in allow/deny rules that could
+   result in data loss.
+      More information at https://www.meteor.com/patch-1.0.1
+
+         This release is being downloaded in the background. Update your
+         app to
+            Meteor 1.0.1 by running 'meteor update'.
+
+            => Started MongoDB.
+            => Started your app.
+
+            => App running at: http://localhost:3000/
 
 ```
 
+Start our PlayerCollectionSupervisor in IEx
 ```=elixir
 ¶ ~/src/elixir/player_voter $ iex -S mix
 Erlang/OTP 17 [erts-6.2] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
