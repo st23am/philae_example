@@ -1,0 +1,11 @@
+%{"decimal": {:hex, :decimal, "0.2.5"},
+  "ecto": {:hex, :ecto, "0.2.5"},
+  "hackney": {:hex, :hackney, "0.14.3"},
+  "httpoison": {:hex, :httpoison, "0.5.0"},
+  "idna": {:hex, :idna, "1.0.1"},
+  "poison": {:hex, :poison, "1.2.1"},
+  "poolboy": {:hex, :poolboy, "1.2.1"},
+  "postgrex": {:hex, :postgrex, "0.6.0"},
+  "socket": {:hex, :socket, "0.2.8"},
+  "uuid": {:hex, :uuid, "0.1.5"},
+  "websocket_client": {:git, "git://github.com/jeremyong/websocket_client.git", "2b8d9805306d36f22330f432ae6472f1f2625c30", []}}
