@@ -2,7 +2,7 @@ Player Leaderboard Example
 ===========
 
 
-Install the Philae hex package in your mix.exs
+Install the Philae as a dependency in your mix.exs
 
 ```elixir
 defmodule PlayerVoter.Mixfile do
