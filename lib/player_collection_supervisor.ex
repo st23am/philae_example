@@ -6,8 +6,8 @@ defmodule PlayerCollectionSupervisor do
   end
 
   def init(:ok) do
-    children = [worker(PlayerSync, []),
-                worker(Repo, [])]
+    children = [worker(Repo, []),
+                worker(PlayerSync, [])]
     supervise(children, strategy: :one_for_one)
   end
 end

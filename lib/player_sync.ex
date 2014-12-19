@@ -1,4 +1,5 @@
 require Logger
+
 defmodule PlayerSync do
   use GenServer
 
@@ -16,6 +17,10 @@ defmodule PlayerSync do
     GenServer.call(pid, {:added, message})
   end
 
+  def changed(pid, message) do
+    GenServer.call(pid, {:changed, message})
+  end
+
   def connected(_pid, _message) do
     Logger.info("Connected to the player collection")
   end
@@ -24,11 +29,15 @@ defmodule PlayerSync do
     Logger.info("Collection is ready")
   end
 
-  def handle_call({:added, %{"fields" => %{"name" => name, "score" => score}, "id" => mongo_id} = message}, _from, state) do
+  def handle_call({:added, %{"fields" => fields, "id" => mongo_id} = message}, _from, state) do
     Logger.info "PlayerVoter recieved added msg:" <> inspect message
-    player_record = %Player{name: name, score: score, mongo_id: mongo_id}
-    Repo.insert(player_record)
-    Logger.info "Inserted Player" <> inspect(player_record) <> "into the Repo"
+    Player.create_or_update_by_mongo_id(mongo_id, fields)
+    {:reply, :ok, state}
+  end
+
+  def handle_call({:changed, %{"fields" => fields, "id" => mongo_id} = message}, _from, state) do
+    Logger.info "PlayerVoter recieved changed msg:" <> inspect message
+    Player.create_or_update_by_mongo_id(mongo_id, fields)
     {:reply, :ok, state}
   end
 
