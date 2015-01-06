@@ -13,6 +13,12 @@ defmodule PlayerSync do
     {:ok, %{client_pid: client_pid, subscription_id: id, collection: collection}}
   end
 
+  #Client API
+
+  def add_player(pid, player_name) do
+    GenServer.call(pid, {:add, player_name})
+  end
+
   def added(pid, message) do
     GenServer.call(pid, {:added, message})
   end
@@ -21,12 +27,26 @@ defmodule PlayerSync do
     GenServer.call(pid, {:changed, message})
   end
 
+  def result(pid, message) do
+    Logger.info "Got a result message of" <> inspect message
+  end
+
   def connected(_pid, _message) do
     Logger.info("Connected to the player collection")
   end
 
   def ready(_pid, _message) do
     Logger.info("Collection is ready")
+  end
+
+  def updated(_pid, message) do
+    Logger.info "Received an Updated method call" <> inspect message
+  end
+
+  # Server API
+  def handle_call({:add, player_name}, _from, %{client_pid: client_pid} = state) do
+    Philae.DDP.method(client_pid, :add, [player_name])
+    {:reply, :ok, state}
   end
 
   def handle_call({:added, %{"fields" => fields, "id" => mongo_id} = message}, _from, state) do

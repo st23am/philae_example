@@ -49,6 +49,15 @@ if (Meteor.isServer) {
       });
     }
   });
+  Meteor.methods({
+    add: function(playerName) {
+      check(playerName, String);
+      Players.insert({
+        name: playerName,
+        score: 0,
+      });
+    }
+  });
   Meteor.publish("players", function (){
     return Players.find();
   });

@@ -20,7 +20,7 @@ defmodule Player do
     Repo.transaction(fn ->
       case find_player_by_mongo_id(mongoid) do
         [] ->
-          player = Repo.insert(fields)
+          player = Repo.insert(Map.merge(%Player{mongo_id: mongoid}, atomize_keys(fields)))
           Logger.info "Inserted Player" <> inspect(player) <> "into the Repo"
         [record] ->
           updated_fields = different_fields(record, atomize_keys(fields))
