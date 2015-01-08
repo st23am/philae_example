@@ -19,6 +19,10 @@ defmodule PlayerSync do
     GenServer.call(pid, {:add, player_name})
   end
 
+  def vote_for_player(pid, player_name) do
+    GenServer.call(pid, {:vote, player_name})
+  end
+
   def added(pid, message) do
     GenServer.call(pid, {:added, message})
   end
@@ -40,10 +44,15 @@ defmodule PlayerSync do
   end
 
   def updated(_pid, message) do
-    Logger.info "Received an Updated method call" <> inspect message
+    Logger.info "Receved an Updated method call" <> inspect message
   end
 
   # Server API
+  def handle_call({:vote, player_name}, _from, %{client_pid: client_pid} = state) do
+    Philae.DDP.method(client_pid, :vote, [player_name])
+    {:reply, :ok, state}
+  end
+
   def handle_call({:add, player_name}, _from, %{client_pid: client_pid} = state) do
     Philae.DDP.method(client_pid, :add, [player_name])
     {:reply, :ok, state}

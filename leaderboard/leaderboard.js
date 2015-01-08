@@ -50,6 +50,10 @@ if (Meteor.isServer) {
     }
   });
   Meteor.methods({
+    vote: function(playerName) {
+      var player = Players.findOne({name: playerName})
+      Players.update(player, {$inc: {score: 5}});
+    },
     add: function(playerName) {
       check(playerName, String);
       Players.insert({
