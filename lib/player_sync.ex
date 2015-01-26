@@ -2,6 +2,7 @@ require Logger
 
 defmodule PlayerSync do
   use GenServer
+  use DDPHandler
 
   def start_link do
     GenServer.start_link(__MODULE__, [], [])
@@ -14,7 +15,15 @@ defmodule PlayerSync do
   end
 
   #Client API
+  def subscribe(pid, collection_id) do
+    GenServer.call(pid, {:subscribe, collection_id})
+  end
 
+  def unsubscribe(pid, collection_id) do
+    GenServer.call(pid, {:unsubscribe, collection_id})
+  end
+
+  # Meteor RPC Functions
   def add_player(pid, player_name) do
     GenServer.call(pid, {:add, player_name})
   end
@@ -23,6 +32,7 @@ defmodule PlayerSync do
     GenServer.call(pid, {:vote, player_name})
   end
 
+  # DDP Callback functions
   def added(pid, message) do
     GenServer.call(pid, {:added, message})
   end
@@ -31,23 +41,17 @@ defmodule PlayerSync do
     GenServer.call(pid, {:changed, message})
   end
 
-  def result(pid, message) do
-    Logger.info "Got a result message of" <> inspect message
-  end
-
-  def connected(_pid, _message) do
-    Logger.info("Connected to the player collection")
-  end
-
-  def ready(_pid, _message) do
-    Logger.info("Collection is ready")
-  end
-
-  def updated(_pid, message) do
-    Logger.info "Receved an Updated method call" <> inspect message
-  end
-
   # Server API
+  def handle_call({:subscribe, collection}, _from, %{client_pid: client_pid} = state) do
+    Philae.DDP.subscribe(client_pid, collection)
+    {:reply, :ok, state}
+  end
+
+  def handle_call({:unsubscribe, collection_id}, _from, %{client_pid: client_pid} = state) do
+    Philae.DDP.unsubscribe(client_pid, collection_id)
+    {:reply, :ok, state}
+  end
+
   def handle_call({:vote, player_name}, _from, %{client_pid: client_pid} = state) do
     Philae.DDP.method(client_pid, :vote, [player_name])
     {:reply, :ok, state}
