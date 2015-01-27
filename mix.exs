@@ -25,9 +25,9 @@ defmodule PlayerVoter.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:philae, path: "~/src/elixir/philae"},
-     {:postgrex, ">= 0.0.0"},
-     {:ecto, "~> 0.2.5"},
+    [{:philae, git: "https://gitbhub.com/cincinnati-elixir/philae.git"},
+     {:postgrex, "0.6.0"},
+     {:ecto, "0.2.5"},
     ]
   end
 end

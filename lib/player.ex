@@ -24,7 +24,7 @@ defmodule Player do
           Logger.info "Inserted Player" <> inspect(player) <> "into the Repo"
         [record] ->
           updated_fields = different_fields(record, atomize_keys(fields))
-          player = update_player(record, updated_fields)
+          update_player(record, updated_fields)
       end
     end)
   end
@@ -43,7 +43,7 @@ defmodule Player do
 
   def different_fields(original, updated) do
     original_hash = Map.to_list(original) |> Enum.into(HashSet.new)
-    updated_hash = Map.to_list(updated) |> Enum.into(HashSet.new)
+    updated_hash = Map.to_list(updated)   |> Enum.into(HashSet.new)
     diff_hash = Set.difference(updated_hash, original_hash)
     updated_fields = Set.to_list(diff_hash) |> Enum.into(%{})
     Map.delete(updated_fields, :id)
