@@ -4,7 +4,7 @@ defmodule PlayerVoter.Mixfile do
   def project do
     [app: :player_voter,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: ">= 1.0.0",
      deps: deps]
   end
 
@@ -25,7 +25,7 @@ defmodule PlayerVoter.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:philae, git: "https://github.com/cincinnati-elixir/philae.git"},
+    [{:philae, git: "https://github.com/cincinnati-elixir/philae"},
      {:postgrex, "0.6.0"},
      {:ecto, "0.2.5"},
     ]
